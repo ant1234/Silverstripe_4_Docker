@@ -1,5 +1,5 @@
 # Silverstripe_4_Docker
-Dockerized Silverstripe 4 environment based on LAMP
+Dockerize your Silverstripe 4 environment ( based on LAMP )
 
 ### Requirements:
 Composer
@@ -7,25 +7,11 @@ PHP 7.3
 
 # Instructions :
 ### Step 1 . Install SilverStripe 4 ( or choose an existing ss app to dockerize )
-composer create-project silverstripe/installer /path/to/project ^4
+`composer create-project silverstripe/installer /path/to/project ^4`
 
-### Step 2 . Drop the Dockerfile and docker-compose.yml into the root directory of the silverstripe project folder
+### Step 2 . Drop the files from this repo ( minus the readme ) into the root directory of your Silverstripe 4 project folder.
 
-### Step 3 . Add .env variables
-```
-# Environment dev or live
-SS_ENVIRONMENT_TYPE="dev"
-SS_DEFAULT_ADMIN_USERNAME="admin"
-SS_DEFAULT_ADMIN_PASSWORD="password"
-SS_BASE_URL="http://localhost:9090/"
-
-# DB credentials
-SS_DATABASE_CLASS="MySQLPDODatabase"
-SS_DATABASE_SERVER="database"
-SS_DATABASE_NAME="development"
-SS_DATABASE_USERNAME="root"
-SS_DATABASE_PASSWORD=""
-```
+### Step 3 . Rename .env.example to .env ( and add to your .gitignore file ), this will set the Silverstripe environment variables that docker will use.
 
 ### Step 4 . Build the image and run the containers :
 `sudo docker-compose up -d`
@@ -33,7 +19,11 @@ SS_DATABASE_PASSWORD=""
 ### Step 5 . Build the project with :
 `docker exec ss_app php ./vendor/silverstripe/framework/cli-script.php dev/build`
 
-### Step 6 . Done! You should see your working app at localhost:9090. Log into the admin with username : admin / password: password
+### Step 6 . Done!
+You should see your working app at `localhost:9090`
+Log into the admin at `localhost:9090/admin`
+username : `admin`
+password : `password`
 
 # Useful Commands :
 

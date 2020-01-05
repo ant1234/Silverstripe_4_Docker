@@ -12,18 +12,13 @@ RUN apt-get update -y && apt-get install -y \
 		zip \
 	--no-install-recommends && \
 	apt-get autoremove -y && \
-	rm -rf /var/lib/apt/lists/*
-
-# Install default PHP Extensions
-RUN docker-php-ext-install -j$(nproc) \
+	rm -rf /var/lib/apt/lists/* && \
+    docker-php-ext-install -j$(nproc) \
 		bcmath \
 		mysqli \
 		pdo \
-		pdo_mysql
-
-
-# Install Intl, LDAP, GD, SOAP, Tidy, XSL, Zip PHP Extensions
-RUN apt-get update -y && apt-get install -y \
+		pdo_mysql && \
+    apt-get update -y && apt-get install -y \
 		zlib1g-dev \
         libicu-dev \
         g++ \
@@ -55,10 +50,8 @@ RUN apt-get update -y && apt-get install -y \
         xsl \
         zip && \
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false && \
-	rm -rf /var/lib/apt/lists/*
-
-# Apache
-RUN { \
+	rm -rf /var/lib/apt/lists/* && \
+    { \
                 echo "<VirtualHost *:9090>"; \
                 echo "  DocumentRoot /var/www/html"; \
                 echo "  LogLevel warn"; \
@@ -78,9 +71,8 @@ RUN { \
                 echo; \
                 echo "  IncludeOptional sites-available/000-default.local*"; \
                 echo "</VirtualHost>"; \
-	} | tee /etc/apache2/sites-available/000-default.conf
-
-RUN echo "ServerName localhost" > /etc/apache2/conf-available/fqdn.conf && \
+	} | tee /etc/apache2/sites-available/000-default.conf && \
+    echo "ServerName localhost" > /etc/apache2/conf-available/fqdn.conf && \
 	echo "date.timezone = Pacific/Auckland" > /usr/local/etc/php/conf.d/timezone.ini && \
     echo "log_errors = On\nerror_log = /dev/stderr" > /usr/local/etc/php/conf.d/errors.ini && \
 	a2enmod rewrite expires remoteip cgid && \
