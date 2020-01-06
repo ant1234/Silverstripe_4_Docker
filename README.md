@@ -17,7 +17,7 @@ PHP 7.3
 `sudo docker-compose up -d`
 
 ### Step 5 . Build the project with :
-`docker exec ss_app php ./vendor/silverstripe/framework/cli-script.php dev/build`
+`sudo docker exec ss_app php ./vendor/silverstripe/framework/cli-script.php dev/build`
 
 ### Step 6 . Done!
 You should see your working app at `localhost:9090`
